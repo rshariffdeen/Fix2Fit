@@ -26,7 +26,7 @@ cd $SRC/chromium_tools
 git clone https://chromium.googlesource.com/chromium/src/tools/clang
 cd clang
 
-LLVM_REVISION=$(grep -Po "CLANG_REVISION = '\K\d+(?=')" scripts/update.py)
+LLVM_REVISION=$(grep -oP '(?<='CLANG_SVN_REVISION"\s"="\s"').*' scripts/update.py | grep -oP "\K[^']*")
 echo "Using LLVM revision: $LLVM_REVISION"
 
 cd $SRC && svn co https://llvm.org/svn/llvm-project/llvm/trunk@$LLVM_REVISION llvm
