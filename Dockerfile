@@ -26,7 +26,7 @@ RUN apt-get install -y  \
     yasm \
     xutils-dev \
     libpciaccess-dev \
-    libpython-dev \
+    libpython2-dev \
     libpython3-dev \
     libx11-dev \
     libxcb-xfixes0-dev \
