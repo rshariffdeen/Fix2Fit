@@ -93,3 +93,6 @@ RUN git checkout fe843d11b4b5f58e09e896848ce4354170bf14bc
 ADD demo/proj4/config.sh /benchmark/proj4/config.sh
 ADD demo/proj4/build.sh /benchmark/proj4/build.sh
 ADD demo/proj4/input /benchmark/proj4/input
+
+# Add shortcut to fix2fit script
+RUN ln -s /src/scripts/run.sh /usr/bin/fix2fit
