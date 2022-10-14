@@ -47,8 +47,7 @@ RUN mkdir /libboost
 RUN cd /libboost && wget https://onboardcloud.dl.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.gz && tar -xf boost_1_58_0.tar.gz && rm boost_1_58_0.tar.gz
 RUN cd /libboost/boost_1_58_0/ && ./bootstrap.sh
 RUN cd /libboost/boost_1_58_0/ && ./b2 ;exit 0
-WORKDIR /src/f1x-oss-fuzz/repair/CInterface
-RUN make
+RUN ln -s /libboost/boost_1_58_0/stage/lib/* /usr/lib
 
 WORKDIR $SRC
 
@@ -90,6 +89,8 @@ ENV CXX="f1x-cxx"
 ENV LDFLAGS="-lpthread -lboost_system"
 ENV PATH="$PATH:/src/scripts"
 
+WORKDIR /src/f1x-oss-fuzz/repair/CInterface
+RUN make
 
 RUN mkdir /benchmark
 WORKDIR /benchmark
@@ -102,3 +103,4 @@ ADD demo/proj4/input /benchmark/proj4/input
 
 # Add shortcut to fix2fit script
 RUN ln -s /src/scripts/run.sh /usr/bin/fix2fit
+ENTRYPOINT ["/bin/bash"]
