@@ -6,3 +6,4 @@ projects/proj4_*
 build/
 output*/
 output_backup/
+.idea/

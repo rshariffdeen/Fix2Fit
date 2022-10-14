@@ -4,3 +4,4 @@ build/
 logs/
 output*
 f1x
+.idea/

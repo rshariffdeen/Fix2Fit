@@ -42,6 +42,13 @@ RUN apt-get install -y build-essential cmake zlib1g-dev libtinfo-dev python unzi
 RUN apt-get install -y libboost-filesystem-dev libboost-program-options-dev libboost-log-dev wget
 RUN pip3 install networkx==2.4
 
+#RUN apt install -y libboost-all-dev libboost-filesystem-dev libboost-program-options-dev libboost-log-dev
+RUN mkdir /libboost
+RUN cd /libboost && wget https://onboardcloud.dl.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.gz && tar -xf boost_1_58_0.tar.gz && rm boost_1_58_0.tar.gz
+RUN cd /libboost/boost_1_58_0/ && ./bootstrap.sh
+RUN cd /libboost/boost_1_58_0/ && ./b2 ;exit 0
+WORKDIR /src/f1x-oss-fuzz/repair/CInterface
+RUN make
 
 WORKDIR $SRC
 
@@ -83,13 +90,6 @@ ENV CXX="f1x-cxx"
 ENV LDFLAGS="-lpthread -lboost_system"
 ENV PATH="$PATH:/src/scripts"
 
-#RUN apt install -y libboost-all-dev libboost-filesystem-dev libboost-program-options-dev libboost-log-dev
-RUN mkdir /libboost
-RUN cd /libboost && wget https://onboardcloud.dl.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.gz && tar -xf boost_1_58_0.tar.gz && rm boost_1_58_0.tar.gz
-RUN cd /libboost/boost_1_58_0/ && ./bootstrap.sh 
-RUN cd /libboost/boost_1_58_0/ && ./b2 ;exit 0
-WORKDIR /src/f1x-oss-fuzz/repair/CInterface 
-RUN make
 
 RUN mkdir /benchmark
 WORKDIR /benchmark
