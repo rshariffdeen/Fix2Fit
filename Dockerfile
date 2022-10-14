@@ -26,7 +26,7 @@ RUN apt-get install -y  \
     yasm \
     xutils-dev \
     libpciaccess-dev \
-    libpython-dev \
+    libpython2-dev \
     libpython3-dev \
     libx11-dev \
     libxcb-xfixes0-dev \
@@ -49,6 +49,7 @@ RUN mkdir f1x-oss-fuzz
 RUN mkdir f1x-oss-fuzz/repair/
 
 #ADD docs       f1x-oss-fuzz/docs
+RUN exit 0
 ADD infra/repair.zip       f1x-oss-fuzz/
 ADD aflgo                  $SRC/aflgo
 ADD scripts/build_aflgo.sh /src/build_aflgo.sh
@@ -79,10 +80,15 @@ ENV F1X_PROJECT_CC="/src/aflgo/afl-clang-fast"
 ENV F1X_PROJECT_CXX="/src/aflgo/afl-clang-fast++"
 ENV CC="f1x-cc"
 ENV CXX="f1x-cxx"
-ENV LDFLAGS="-lpthread"
+ENV LDFLAGS="-lpthread -lboost_system"
 ENV PATH="$PATH:/src/scripts"
 
-WORKDIR /src/f1x-oss-fuzz/repair/CInterface
+#RUN apt install -y libboost-all-dev libboost-filesystem-dev libboost-program-options-dev libboost-log-dev
+RUN mkdir /libboost
+RUN cd /libboost && wget https://onboardcloud.dl.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.gz && tar -xf boost_1_58_0.tar.gz && rm boost_1_58_0.tar.gz
+RUN cd /libboost/boost_1_58_0/ && ./bootstrap.sh 
+RUN cd /libboost/boost_1_58_0/ && ./b2 ;exit 0
+WORKDIR /src/f1x-oss-fuzz/repair/CInterface 
 RUN make
 
 RUN mkdir /benchmark

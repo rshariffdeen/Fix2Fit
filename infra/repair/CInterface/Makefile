@@ -1,4 +1,4 @@
-CFLAGS=-lF1X -lf1xRepair -lrt -lboost_program_options -lboost_log -lboost_log_setup -lboost_date_time -lboost_system -lboost_filesystem -lboost_thread -lboost_chrono -lboost_atomic -lpthread
+CFLAGS=-L/libboost/boost_1_58_0/stage/lib -lF1X -lf1xRepair -lrt -lboost_regex -lboost_program_options -lboost_log -lboost_log_setup -lboost_date_time -lboost_system -lboost_filesystem -lboost_thread -lboost_chrono -lboost_atomic -lpthread
 
 profile: profile.c
 	gcc -o profile profile.c $(CFLAGS)
