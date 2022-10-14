@@ -1,4 +1,4 @@
-FROM gaoxiang9430/fix2fit:v.01
+FROM gaoxiang9430/fix2fit:v0.1
 MAINTAINER Ridwan Shariffdeen <ridwan@comp.nus.edu.sg>
 ARG DEBIAN_FRONTEND=noninteractive
 
