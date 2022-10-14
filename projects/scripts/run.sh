@@ -26,9 +26,9 @@ export LD_LIBRARY_PATH=$binary_path:$LD_LIBRARY_PATH
 export AFL_NO_AFFINITY=" "
 
 mkdir -p $SUBJECT_DIR/patches
-f1x_cmd="f1x -f $BUGGY_FILE -t $TESTCASE -T 15000 -d $DRIVER -b $BUILD -a -P $binary_path -N $binary_name -M 16 -o $SUBJECT_DIR/patches"
+f1x_cmd="f1x -f $BUGGY_FILE -t $TESTCASE -T $T_TIMEOUT -d $DRIVER -b $BUILD -a -P $binary_path -N $binary_name -M 16 -o $SUBJECT_DIR/patches"
 echo $f1x_cmd > $SCRIPT_DIR/f1xcmd.sh
-timeout $TIMEOUT /src/aflgo/afl-fuzz -S ef709ce2 -z exp -c $cooling_time -i ./input -o ./out $CRASHMODE -s part -t 1000 -R $SCRIPT_DIR/f1xcmd.sh ${BINARY}_profile @@
+timeout $TIMEOUT /src/aflgo/afl-fuzz -S ef709ce2 -z exp -c $cooling_time -i ./input -o ./out $CRASHMODE -s part -t $T_TIMEOUT -R $SCRIPT_DIR/f1xcmd.sh ${BINARY}_profile @@
 
 popd > /dev/null
 
